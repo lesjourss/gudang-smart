@@ -11,57 +11,46 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap 5.3 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
 
     <style>
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #f4f6f9;
-            color: #334155;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .main-wrapper {
-            display: flex;
-            flex: 1;
-        }
-        .content-area {
-            flex: 1;
-            padding: 1.75rem 2rem;
-            background-color: #f8fafc;
-            overflow-y: auto;
-        }
-        .card {
-            border-radius: 0.75rem;
-        }
-        footer {
-            margin-top: auto;
-        }
+        [x-cloak] { display: none !important; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
     </style>
     @stack('styles')
 </head>
-<body>
+<body class="bg-zinc-50/80 text-zinc-700 min-h-screen flex flex-col antialiased">
 
     <!-- 1. Header & Top Navigation Bar (Reusable Component) -->
-    <header>
+    <header class="sticky top-0 z-50">
         <x-navbar />
     </header>
 
     <!-- 2. Main Wrapper: Sidebar Navigation & Content Area -->
-    <div class="main-wrapper">
+    <div class="flex flex-1 overflow-hidden">
         <!-- Sidebar Navigation (Reusable Component) -->
-        <aside>
+        <aside class="hidden lg:block flex-shrink-0">
             <x-sidebar />
         </aside>
 
         <!-- 3. Content Area (Directives: @yield('content')) -->
-        <main class="content-area">
-            <div class="container-fluid p-0">
+        <main class="flex-1 overflow-y-auto p-6 lg:p-8">
+            <div class="max-w-7xl mx-auto">
                 <!-- Flash Message Alerts -->
                 @if(session('success'))
                     <x-alert type="success" :message="session('success')" />
@@ -85,16 +74,11 @@
         </main>
     </div>
 
-    <!-- 4. Footer Area Baku -->
-    <footer class="bg-white border-top py-3 text-center text-muted small">
-        <div class="container-fluid">
-            <span>&copy; {{ date('Y') }} <strong>GudangSmart</strong> &mdash; Sistem Manufaktur & Inventory Berbasis Laravel Framework. Dibuat untuk Evaluasi Praktik PWTM.</span>
-        </div>
+    <!-- 4. Footer Area -->
+    <footer class="border-t border-zinc-200/60 bg-white py-4 text-center text-zinc-400 text-xs">
+        <span>&copy; {{ date('Y') }} <strong class="text-zinc-600">GudangSmart</strong> &mdash; Sistem Manufaktur & Inventory Berbasis Laravel Framework. Dibuat untuk Evaluasi Praktik PWTM.</span>
     </footer>
 
-    <!-- Bootstrap 5.3 Bundle JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     @stack('scripts')
 </body>
 </html>
-

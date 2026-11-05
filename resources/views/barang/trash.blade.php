@@ -3,85 +3,75 @@
 @section('title', 'Kotak Sampah (Trash) - Barang Terhapus')
 
 @section('content')
-<div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-1 small">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}" class="text-decoration-none">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.barang.index') }}" class="text-decoration-none">Katalog Barang</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Trash</li>
-            </ol>
-        </nav>
-        <h2 class="h3 fw-bold text-danger mb-1 d-flex align-items-center">
-            <i class="bi bi-trash3-fill me-2"></i> Kotak Sampah Barang (Soft Deleted)
-        </h2>
-        <p class="text-muted mb-0">Daftar barang yang dihapus sementara dari sistem. Anda dapat memulihkan (Restore) atau menghapus permanen.</p>
+        <div class="flex items-center gap-2 text-sm text-zinc-500 mb-2">
+            <a href="{{ route('admin.dashboard') }}" class="hover:text-zinc-900 transition">Dashboard</a>
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <a href="{{ route('admin.barang.index') }}" class="hover:text-zinc-900 transition">Katalog Barang</a>
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-zinc-900 font-medium">Trash</span>
+        </div>
+        <h1 class="text-2xl font-bold text-red-600 tracking-tight flex items-center gap-2">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            Kotak Sampah
+        </h1>
+        <p class="text-zinc-500 text-sm mt-1">Barang yang dihapus sementara. Pulihkan atau hapus permanen.</p>
     </div>
-    <div>
-        <a href="{{ route('admin.barang.index') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left me-1"></i> Kembali ke Katalog
-        </a>
-    </div>
+    <a href="{{ route('admin.barang.index') }}" class="inline-flex items-center gap-2 border border-zinc-200 text-zinc-600 px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-zinc-50 transition">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        Kembali ke Katalog
+    </a>
 </div>
 
-<div class="card border-0 shadow-sm bg-white">
-    <div class="card-header bg-danger bg-opacity-10 py-3 border-bottom border-danger-subtle d-flex justify-content-between align-items-center">
-        <span class="fw-semibold text-danger">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            Terdapat {{ $barangTrashed->total() }} barang di dalam kotak sampah
+<div class="bg-white rounded-2xl border border-zinc-200/60 shadow-sm overflow-hidden">
+    <div class="px-6 py-4 border-b border-zinc-100 bg-red-50/50 flex items-center justify-between">
+        <span class="text-sm font-medium text-red-600 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+            {{ $barangTrashed->total() }} barang di kotak sampah
         </span>
-        <span class="badge bg-danger">Khusus Manager</span>
+        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold bg-red-100 text-red-600 uppercase">Khusus Manager</span>
     </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light text-secondary small text-uppercase">
-                <tr>
-                    <th class="ps-4">No</th>
-                    <th>Kode Barang</th>
-                    <th>Nama Barang</th>
-                    <th>Kategori</th>
-                    <th>Supplier</th>
-                    <th>Waktu Dihapus</th>
-                    <th class="text-center pe-4" style="width: 220px;">Aksi Pemulihan</th>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-zinc-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider w-12">No</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Kode</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Nama Barang</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Kategori</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Supplier</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Dihapus</th>
+                    <th class="text-center px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider w-52">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-zinc-50">
                 @forelse($barangTrashed as $index => $item)
-                    <tr>
-                        <td class="ps-4 text-muted small">{{ $barangTrashed->firstItem() + $index }}</td>
-                        <td>
-                            <span class="badge bg-secondary font-monospace">{{ $item->kode_barang }}</span>
+                    <tr class="hover:bg-zinc-50/50 transition">
+                        <td class="px-6 py-3 text-zinc-400 text-xs">{{ $barangTrashed->firstItem() + $index }}</td>
+                        <td class="px-6 py-3"><span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-mono bg-zinc-100 text-zinc-500">{{ $item->kode_barang }}</span></td>
+                        <td class="px-6 py-3">
+                            <div class="font-medium text-zinc-400 line-through">{{ $item->nama_barang }}</div>
+                            <div class="text-xs text-zinc-400 mt-0.5">Stok: {{ $item->stok }} unit</div>
                         </td>
-                        <td>
-                            <div class="fw-bold text-dark text-decoration-line-through">{{ $item->nama_barang }}</div>
-                            <span class="small text-muted">Stok terakhir: {{ $item->stok }} unit</span>
-                        </td>
-                        <td>
-                            <span class="badge bg-light text-dark border">{{ $item->kategori->nama_kategori ?? '-' }}</span>
-                        </td>
-                        <td>{{ $item->supplier->nama_pt ?? '-' }}</td>
-                        <td>
-                            <span class="badge bg-danger-subtle text-danger">
-                                <i class="bi bi-clock me-1"></i>{{ $item->deleted_at->format('d M Y H:i') }}
-                            </span>
-                        </td>
-                        <td class="text-center pe-4">
-                            <div class="d-flex justify-content-center gap-2">
-                                <!-- Tombol Restore -->
-                                <form action="{{ route('admin.barang.restore', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Pulihkan barang ini kembali ke katalog aktif?');">
+                        <td class="px-6 py-3"><span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium bg-zinc-100 text-zinc-500">{{ $item->kategori->nama_kategori ?? '-' }}</span></td>
+                        <td class="px-6 py-3 text-zinc-500">{{ $item->supplier->nama_pt ?? '-' }}</td>
+                        <td class="px-6 py-3"><span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-50 text-red-500">{{ $item->deleted_at->format('d M Y H:i') }}</span></td>
+                        <td class="px-6 py-3 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <form action="{{ route('admin.barang.restore', $item->id) }}" method="POST" onsubmit="return confirm('Pulihkan barang ini?');">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-success d-flex align-items-center shadow-sm">
-                                        <i class="bi bi-arrow-counterclockwise me-1"></i> Pulihkan
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-600 text-xs font-medium hover:bg-emerald-100 transition">
+                                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                        Pulihkan
                                     </button>
                                 </form>
-
-                                <!-- Tombol Force Delete -->
-                                <form action="{{ route('admin.barang.force-delete', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('PERINGATAN: Barang ini akan dihapus permanen dan tidak dapat dipulihkan lagi! Lanjutkan?');">
+                                <form action="{{ route('admin.barang.force-delete', $item->id) }}" method="POST" onsubmit="return confirm('PERINGATAN: Barang dihapus permanen! Lanjutkan?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger d-flex align-items-center">
-                                        <i class="bi bi-x-circle me-1"></i> Hapus Permanen
+                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-200 text-red-500 text-xs font-medium hover:bg-red-50 transition">
+                                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                                        Hapus Permanen
                                     </button>
                                 </form>
                             </div>
@@ -89,21 +79,19 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center py-5 text-muted">
-                            <i class="bi bi-check-circle fs-1 text-success d-block mb-2"></i>
-                            Kotak sampah bersih. Tidak ada data barang yang terhapus sementara.
+                        <td colspan="7" class="px-6 py-16 text-center">
+                            <svg class="w-12 h-12 text-emerald-200 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <p class="text-zinc-400 text-sm">Kotak sampah bersih. Tidak ada data terhapus.</p>
                         </td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-
     @if($barangTrashed->hasPages())
-        <div class="card-footer bg-white py-3 border-top">
-            {{ $barangTrashed->links('pagination::bootstrap-5') }}
+        <div class="px-6 py-4 border-t border-zinc-100">
+            {{ $barangTrashed->links('pagination::tailwind') }}
         </div>
     @endif
 </div>
 @endsection
-

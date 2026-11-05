@@ -3,132 +3,112 @@
 @section('title', 'Mutasi Stok')
 
 @section('content')
-<div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
-        <h2 class="h3 fw-bold text-dark mb-1">Transaksi Mutasi Stok Barang</h2>
-        <p class="text-muted mb-0">Catatan riwayat penerimaan barang masuk dan pengeluaran barang produksi/distribusi.</p>
+        <h1 class="text-2xl font-bold text-zinc-900 tracking-tight">Transaksi Mutasi Stok</h1>
+        <p class="text-zinc-500 text-sm mt-1">Riwayat penerimaan barang masuk dan pengeluaran produksi/distribusi.</p>
     </div>
-    <div>
-        <a href="{{ route('admin.mutasi.create') }}" class="btn btn-primary shadow-sm d-flex align-items-center">
-            <i class="bi bi-plus-circle me-2"></i> Catat Transaksi Mutasi
-        </a>
-    </div>
+    <a href="{{ route('admin.mutasi.create') }}" class="inline-flex items-center gap-2 bg-zinc-900 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-zinc-800 transition shadow-sm">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        Catat Transaksi
+    </a>
 </div>
 
-<!-- Filter Bar -->
-<div class="card border-0 shadow-sm mb-4 bg-white">
-    <div class="card-body p-3">
-        <form action="{{ route('admin.mutasi.index') }}" method="GET" class="row g-2 align-items-center">
-            <div class="col-12 col-md-5">
-                <select name="barang_id" class="form-select">
-                    <option value="">-- Semua Barang --</option>
-                    @foreach($barangList as $b)
-                        <option value="{{ $b->id }}" {{ request('barang_id') == $b->id ? 'selected' : '' }}>
-                            {{ $b->nama_barang }} ({{ $b->kode_barang }})
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-12 col-md-4">
-                <select name="jenis_mutasi" class="form-select">
-                    <option value="">-- Semua Jenis Mutasi --</option>
-                    <option value="masuk" {{ request('jenis_mutasi') == 'masuk' ? 'selected' : '' }}>Barang Masuk (Penerimaan)</option>
-                    <option value="keluar" {{ request('jenis_mutasi') == 'keluar' ? 'selected' : '' }}>Barang Keluar (Pengeluaran)</option>
-                </select>
-            </div>
-            <div class="col-12 col-md-3 d-flex gap-2">
-                <button type="submit" class="btn btn-primary flex-grow-1">Filter</button>
-                @if(request()->hasAny(['barang_id', 'jenis_mutasi']))
-                    <a href="{{ route('admin.mutasi.index') }}" class="btn btn-outline-secondary">Reset</a>
-                @endif
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Mutasi Table -->
-<div class="card border-0 shadow-sm bg-white">
-    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-        <div class="fw-semibold text-dark">
-            <i class="bi bi-clock-history text-primary me-2"></i>
-            Log Transaksi Mutasi ({{ $mutasi->total() }} Catatan)
+<!-- Filter -->
+<div class="bg-white rounded-2xl border border-zinc-200/60 shadow-sm p-4 mb-6">
+    <form action="{{ route('admin.mutasi.index') }}" method="GET" class="flex flex-col md:flex-row gap-3">
+        <div class="flex-1">
+            <select name="barang_id" class="w-full rounded-xl border border-zinc-200 bg-zinc-50/50 px-4 py-2.5 text-sm text-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition appearance-none">
+                <option value="">Semua Barang</option>
+                @foreach($barangList as $b)
+                    <option value="{{ $b->id }}" {{ request('barang_id') == $b->id ? 'selected' : '' }}>{{ $b->nama_barang }} ({{ $b->kode_barang }})</option>
+                @endforeach
+            </select>
         </div>
-        <span class="badge bg-secondary-subtle text-secondary">Halaman {{ $mutasi->currentPage() }} dari {{ $mutasi->lastPage() }}</span>
-    </div>
+        <div class="md:w-56">
+            <select name="jenis_mutasi" class="w-full rounded-xl border border-zinc-200 bg-zinc-50/50 px-4 py-2.5 text-sm text-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition appearance-none">
+                <option value="">Semua Jenis</option>
+                <option value="masuk" {{ request('jenis_mutasi') == 'masuk' ? 'selected' : '' }}>Barang Masuk</option>
+                <option value="keluar" {{ request('jenis_mutasi') == 'keluar' ? 'selected' : '' }}>Barang Keluar</option>
+            </select>
+        </div>
+        <div class="flex gap-2">
+            <button type="submit" class="inline-flex items-center gap-2 bg-zinc-900 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-zinc-800 transition">Filter</button>
+            @if(request()->hasAny(['barang_id', 'jenis_mutasi']))
+                <a href="{{ route('admin.mutasi.index') }}" class="inline-flex items-center px-3 py-2.5 rounded-xl border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition text-sm">Reset</a>
+            @endif
+        </div>
+    </form>
+</div>
 
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light text-secondary small text-uppercase">
-                <tr>
-                    <th class="ps-4">No</th>
-                    <th>Waktu & Tanggal</th>
-                    <th>Kode & Nama Barang</th>
-                    <th>Jenis Mutasi</th>
-                    <th class="text-end">Jumlah</th>
-                    <th>Petugas PIC</th>
-                    <th class="pe-4">Keterangan</th>
+<!-- Table -->
+<div class="bg-white rounded-2xl border border-zinc-200/60 shadow-sm overflow-hidden">
+    <div class="px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
+        <p class="text-sm text-zinc-500">{{ $mutasi->total() }} transaksi tercatat</p>
+        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-zinc-100 text-zinc-600">Hal. {{ $mutasi->currentPage() }}/{{ $mutasi->lastPage() }}</span>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-zinc-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider w-12">No</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Waktu</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Barang</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Jenis</th>
+                    <th class="text-right px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Jumlah</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Petugas</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Keterangan</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-zinc-50">
                 @forelse($mutasi as $index => $m)
-                    <tr>
-                        <td class="ps-4 text-muted small">{{ $mutasi->firstItem() + $index }}</td>
-                        <td>
-                            <div class="fw-semibold text-dark">{{ $m->created_at->format('d M Y') }}</div>
-                            <span class="small text-muted">{{ $m->created_at->format('H:i') }} WIB</span>
+                    <tr class="hover:bg-zinc-50/50 transition">
+                        <td class="px-6 py-3 text-zinc-400 text-xs">{{ $mutasi->firstItem() + $index }}</td>
+                        <td class="px-6 py-3">
+                            <div class="font-medium text-zinc-900">{{ $m->created_at->format('d M Y') }}</div>
+                            <div class="text-xs text-zinc-400">{{ $m->created_at->format('H:i') }} WIB</div>
                         </td>
-                        <td>
-                            <div class="fw-bold text-dark">{{ $m->barang->nama_barang ?? 'Barang Terhapus' }}</div>
-                            <span class="badge bg-secondary-subtle text-secondary font-monospace">{{ $m->barang->kode_barang ?? '-' }}</span>
+                        <td class="px-6 py-3">
+                            <div class="font-medium text-zinc-900">{{ $m->barang->nama_barang ?? 'Terhapus' }}</div>
+                            <span class="inline-flex rounded-full px-2 py-0.5 text-[10px] font-mono bg-zinc-100 text-zinc-500">{{ $m->barang->kode_barang ?? '-' }}</span>
                         </td>
-                        <td>
+                        <td class="px-6 py-3">
                             @if($m->jenis_mutasi === 'masuk')
-                                <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
-                                    <i class="bi bi-arrow-down-left-circle me-1"></i> Masuk (Penerimaan)
+                                <span class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium bg-emerald-50 text-emerald-600">
+                                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                                    Masuk
                                 </span>
                             @else
-                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">
-                                    <i class="bi bi-arrow-up-right-circle me-1"></i> Keluar (Pengeluaran)
+                                <span class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-50 text-red-600">
+                                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                                    Keluar
                                 </span>
                             @endif
                         </td>
-                        <td class="text-end">
-                            <span class="fw-bold fs-6 {{ $m->jenis_mutasi === 'masuk' ? 'text-success' : 'text-danger' }}">
-                                {{ $m->jenis_mutasi === 'masuk' ? '+' : '-' }}{{ number_format($m->jumlah) }} unit
-                            </span>
+                        <td class="px-6 py-3 text-right font-semibold {{ $m->jenis_mutasi === 'masuk' ? 'text-emerald-600' : 'text-red-500' }}">
+                            {{ $m->jenis_mutasi === 'masuk' ? '+' : '-' }}{{ number_format($m->jumlah) }}
                         </td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-person-circle text-muted me-2"></i>
-                                <div>
-                                    <div class="fw-semibold small text-dark">{{ $m->user->name ?? 'Sistem' }}</div>
-                                    <span class="badge {{ ($m->user->role ?? '') === 'manager' ? 'bg-danger' : 'bg-primary' }} text-uppercase" style="font-size: 0.65rem;">
-                                        {{ $m->user->role ?? '-' }}
-                                    </span>
-                                </div>
-                            </div>
+                        <td class="px-6 py-3">
+                            <div class="text-sm font-medium text-zinc-900">{{ $m->user->name ?? 'Sistem' }}</div>
+                            <span class="inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase {{ ($m->user->role ?? '') === 'manager' ? 'bg-red-50 text-red-500' : 'bg-blue-50 text-blue-500' }}">{{ $m->user->role ?? '-' }}</span>
                         </td>
-                        <td class="pe-4 text-muted small">
-                            {{ $m->keterangan ?? '-' }}
-                        </td>
+                        <td class="px-6 py-3 text-zinc-400 text-sm max-w-[180px] truncate">{{ $m->keterangan ?? '-' }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center py-5 text-muted">
-                            <i class="bi bi-journal-x fs-1 d-block mb-2 text-secondary"></i>
-                            Belum ada catatan transaksi mutasi stok.
+                        <td colspan="7" class="px-6 py-16 text-center">
+                            <svg class="w-12 h-12 text-zinc-200 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                            <p class="text-zinc-400 text-sm">Belum ada catatan transaksi mutasi.</p>
                         </td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-
     @if($mutasi->hasPages())
-        <div class="card-footer bg-white py-3 border-top">
-            {{ $mutasi->links('pagination::bootstrap-5') }}
+        <div class="px-6 py-4 border-t border-zinc-100">
+            {{ $mutasi->links('pagination::tailwind') }}
         </div>
     @endif
 </div>
 @endsection
-

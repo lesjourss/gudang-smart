@@ -1,94 +1,67 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-white border-end shadow-sm" style="min-height: calc(100vh - 60px); width: 260px;">
+<div class="flex flex-col w-64 bg-white border-r border-zinc-200/60 h-[calc(100vh-57px)] overflow-y-auto">
     <!-- Profile Mini Summary -->
-    <div class="p-3 mb-3 bg-light rounded-3 border">
-        <div class="small text-muted text-uppercase fw-semibold mb-1">Akses Pengguna</div>
-        <div class="fw-bold text-dark text-truncate">{{ Auth::user()->name ?? 'Tamu' }}</div>
-        <div class="d-flex align-items-center mt-1">
-            <span class="badge {{ (Auth::user()->role ?? '') === 'manager' ? 'bg-danger' : 'bg-primary' }} text-uppercase">
-                <i class="bi {{ (Auth::user()->role ?? '') === 'manager' ? 'bi-shield-shaded' : 'bi-person-badge' }} me-1"></i>
+    <div class="p-4 m-4 mb-2 bg-zinc-50 rounded-xl border border-zinc-200/60">
+        <div class="text-[10px] uppercase tracking-wider text-zinc-400 font-semibold mb-1.5">Akses Pengguna</div>
+        <div class="font-semibold text-zinc-900 text-sm truncate">{{ Auth::user()->name ?? 'Tamu' }}</div>
+        <div class="mt-1.5">
+            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide {{ (Auth::user()->role ?? '') === 'manager' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600' }}">
                 {{ Auth::user()->role ?? 'Guest' }}
             </span>
         </div>
     </div>
 
-    <!-- Navigation Menu Items (Instruksi Soal 2.2) -->
-    <ul class="nav nav-pills flex-column mb-auto gap-1">
-        <!-- 1. Menu Dashboard -->
-        <li class="nav-item">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link d-flex align-items-center py-2 px-3 {{ request()->routeIs('admin.dashboard') ? 'active bg-primary text-white shadow-sm' : 'text-secondary hover-link' }}">
-                <i class="bi bi-speedometer2 me-2 fs-5"></i>
-                <span class="fw-medium">Dashboard</span>
-            </a>
-        </li>
+    <!-- Navigation Menu -->
+    <nav class="flex-1 px-3 py-2 space-y-1">
+        <!-- Dashboard -->
+        <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ request()->routeIs('admin.dashboard') ? 'bg-zinc-900 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900' }}">
+            <svg class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zm0 7a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1h-4a1 1 0 01-1-1v-5zM4 13a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2z"/></svg>
+            Dashboard
+        </a>
 
-        <li class="my-2 border-top"></li>
-        <div class="text-uppercase text-muted fw-bold px-3 py-1" style="font-size: 0.72rem; letter-spacing: 0.5px;">Master Data</div>
+        <div class="pt-4 pb-1.5 px-3">
+            <span class="text-[10px] uppercase tracking-wider text-zinc-400 font-semibold">Master Data</span>
+        </div>
 
-        <!-- 2. Menu Supplier -->
-        <li class="nav-item">
-            <a href="{{ route('admin.suppliers.index') }}" class="nav-link d-flex align-items-center justify-content-between py-2 px-3 {{ request()->routeIs('admin.suppliers.*') ? 'active bg-primary text-white shadow-sm' : 'text-secondary hover-link' }}">
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-truck me-2 fs-5"></i>
-                    <span class="fw-medium">Supplier</span>
-                </div>
-                @if(Auth::user()?->role === 'manager')
-                    <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.65rem;">Kelola</span>
-                @else
-                    <span class="badge bg-secondary-subtle text-secondary" style="font-size: 0.65rem;">Lihat</span>
-                @endif
-            </a>
-        </li>
+        <!-- Supplier -->
+        <a href="{{ route('admin.suppliers.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ request()->routeIs('admin.suppliers.*') ? 'bg-zinc-900 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900' }}">
+            <svg class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Supplier
+        </a>
 
-        <!-- 3. Menu Katalog Barang -->
-        <li class="nav-item">
-            <a href="{{ route('admin.barang.index') }}" class="nav-link d-flex align-items-center py-2 px-3 {{ request()->routeIs('admin.barang.index') || request()->routeIs('admin.barang.create') || request()->routeIs('admin.barang.edit') || request()->routeIs('admin.barang.show') ? 'active bg-primary text-white shadow-sm' : 'text-secondary hover-link' }}">
-                <i class="bi bi-box-seam me-2 fs-5"></i>
-                <span class="fw-medium">Katalog Barang</span>
-            </a>
-        </li>
+        <!-- Katalog Barang -->
+        <a href="{{ route('admin.barang.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ request()->routeIs('admin.barang.index') || request()->routeIs('admin.barang.create') || request()->routeIs('admin.barang.edit') || request()->routeIs('admin.barang.show') ? 'bg-zinc-900 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900' }}">
+            <svg class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            Katalog Barang
+        </a>
 
-        <!-- 4. Menu Kategori Barang (Sesuai Soal 2.2) -->
-        <li class="nav-item">
-            <a href="{{ route('admin.kategori.index') }}" class="nav-link d-flex align-items-center py-2 px-3 {{ request()->routeIs('admin.kategori.*') ? 'active bg-primary text-white shadow-sm' : 'text-secondary hover-link' }}">
-                <i class="bi bi-tags me-2 fs-5"></i>
-                <span class="fw-medium">Kategori Barang</span>
-            </a>
-        </li>
+        <!-- Kategori Barang -->
+        <a href="{{ route('admin.kategori.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ request()->routeIs('admin.kategori.*') ? 'bg-zinc-900 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900' }}">
+            <svg class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+            Kategori Barang
+        </a>
 
-        <!-- 5. Menu Mutasi Stok (Sesuai Soal 2.2) -->
-        <li class="nav-item">
-            <a href="{{ route('admin.mutasi.index') }}" class="nav-link d-flex align-items-center py-2 px-3 {{ request()->routeIs('admin.mutasi.*') ? 'active bg-primary text-white shadow-sm' : 'text-secondary hover-link' }}">
-                <i class="bi bi-arrow-left-right me-2 fs-5"></i>
-                <span class="fw-medium">Mutasi Stok</span>
-                <span class="badge {{ request()->routeIs('admin.mutasi.*') ? 'bg-light text-primary' : 'bg-warning text-dark' }} ms-auto" style="font-size: 0.65rem;">Masuk/Keluar</span>
-            </a>
-        </li>
+        <!-- Mutasi Stok -->
+        <a href="{{ route('admin.mutasi.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ request()->routeIs('admin.mutasi.*') ? 'bg-zinc-900 text-white shadow-sm' : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900' }}">
+            <svg class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+            Mutasi Stok
+        </a>
 
         @if(Auth::user()?->role === 'manager')
-            <li class="my-2 border-top"></li>
-            <div class="text-uppercase text-danger fw-bold px-3 py-1" style="font-size: 0.72rem; letter-spacing: 0.5px;">Area Khusus Manager</div>
+            <div class="pt-4 pb-1.5 px-3">
+                <span class="text-[10px] uppercase tracking-wider text-red-400 font-semibold">Area Manager</span>
+            </div>
 
-            <!-- Menu Trash / Soft Delete -->
-            <li class="nav-item">
-                <a href="{{ route('admin.barang.trash') }}" class="nav-link d-flex align-items-center py-2 px-3 {{ request()->routeIs('admin.barang.trash') ? 'active bg-danger text-white shadow-sm' : 'text-danger hover-link' }}">
-                    <i class="bi bi-trash3 me-2 fs-5"></i>
-                    <span class="fw-medium">Data Sampah (Trash)</span>
-                </a>
-            </li>
+            <!-- Trash -->
+            <a href="{{ route('admin.barang.trash') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all {{ request()->routeIs('admin.barang.trash') ? 'bg-red-500 text-white shadow-sm' : 'text-red-500 hover:bg-red-50' }}">
+                <svg class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                Data Sampah (Trash)
+            </a>
         @endif
-    </ul>
+    </nav>
 
-    <!-- Quick System Help/Documentation -->
-    <div class="mt-auto pt-3 border-top text-center text-muted small">
-        <div><i class="bi bi-shield-check text-primary me-1"></i> <strong>GudangSmart v1.0</strong></div>
-        <div style="font-size: 0.75rem;">Arsitektur MVC Laravel</div>
+    <!-- Footer -->
+    <div class="p-4 border-t border-zinc-100 text-center">
+        <div class="text-xs font-semibold text-zinc-500">GudangSmart v1.0</div>
+        <div class="text-[10px] text-zinc-400 mt-0.5">Arsitektur MVC Laravel</div>
     </div>
 </div>
-
-<style>
-    .hover-link:hover {
-        background-color: #f8f9fa;
-        color: #0d6efd !important;
-    }
-</style>
-

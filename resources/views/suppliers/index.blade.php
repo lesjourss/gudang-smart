@@ -3,103 +3,80 @@
 @section('title', 'Data Supplier')
 
 @section('content')
-<div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
-        <h2 class="h3 fw-bold text-dark mb-1">Manajemen Mitra Supplier</h2>
-        <p class="text-muted mb-0">Daftar mitra pemasok bahan baku dan komponen manufaktur GudangSmart.</p>
+        <h1 class="text-2xl font-bold text-zinc-900 tracking-tight">Manajemen Supplier</h1>
+        <p class="text-zinc-500 text-sm mt-1">Daftar mitra pemasok bahan baku dan komponen manufaktur.</p>
     </div>
     @if(Auth::user()?->role === 'manager')
-        <div>
-            <a href="{{ route('admin.suppliers.create') }}" class="btn btn-primary shadow-sm d-flex align-items-center">
-                <i class="bi bi-plus-lg me-2"></i> Tambah Supplier Baru
-            </a>
-        </div>
+        <a href="{{ route('admin.suppliers.create') }}" class="inline-flex items-center gap-2 bg-zinc-900 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-zinc-800 transition shadow-sm">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            Tambah Supplier
+        </a>
     @endif
 </div>
 
-<!-- Search Bar -->
-<div class="card border-0 shadow-sm mb-4 bg-white">
-    <div class="card-body p-3">
-        <form action="{{ route('admin.suppliers.index') }}" method="GET" class="row g-2 align-items-center">
-            <div class="col-12 col-md-9">
-                <div class="input-group">
-                    <span class="input-group-text bg-light text-muted"><i class="bi bi-search"></i></span>
-                    <input type="text" name="search" class="form-control" placeholder="Cari nama perusahaan, kode supplier, atau email..." value="{{ request('search') }}">
-                </div>
-            </div>
-            <div class="col-12 col-md-3 d-flex gap-2">
-                <button type="submit" class="btn btn-primary flex-grow-1">Cari</button>
-                @if(request('search'))
-                    <a href="{{ route('admin.suppliers.index') }}" class="btn btn-outline-secondary">Reset</a>
-                @endif
-            </div>
-        </form>
-    </div>
+<!-- Search -->
+<div class="bg-white rounded-2xl border border-zinc-200/60 shadow-sm p-4 mb-6">
+    <form action="{{ route('admin.suppliers.index') }}" method="GET" class="flex gap-3">
+        <input type="text" name="search" class="flex-1 rounded-xl border border-zinc-200 bg-zinc-50/50 px-4 py-2.5 text-sm placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition" placeholder="Cari nama perusahaan, kode, atau email..." value="{{ request('search') }}">
+        <button type="submit" class="inline-flex items-center gap-2 bg-zinc-900 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-zinc-800 transition">Cari</button>
+        @if(request('search'))
+            <a href="{{ route('admin.suppliers.index') }}" class="inline-flex items-center px-3 py-2.5 rounded-xl border border-zinc-200 text-zinc-500 hover:bg-zinc-50 transition text-sm">Reset</a>
+        @endif
+    </form>
 </div>
 
-<!-- Supplier Data Table -->
-<div class="card border-0 shadow-sm bg-white">
-    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-        <div class="fw-semibold text-dark">
-            <i class="bi bi-truck text-primary me-2"></i>
-            Daftar Mitra Supplier ({{ $suppliers->total() }} Perusahaan)
-        </div>
-        <span class="badge bg-secondary-subtle text-secondary">Halaman {{ $suppliers->currentPage() }} dari {{ $suppliers->lastPage() }}</span>
+<!-- Table -->
+<div class="bg-white rounded-2xl border border-zinc-200/60 shadow-sm overflow-hidden">
+    <div class="px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
+        <p class="text-sm text-zinc-500">{{ $suppliers->total() }} supplier terdaftar</p>
+        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-zinc-100 text-zinc-600">Hal. {{ $suppliers->currentPage() }}/{{ $suppliers->lastPage() }}</span>
     </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light text-secondary small text-uppercase">
-                <tr>
-                    <th class="ps-4">No</th>
-                    <th>Kode Supplier</th>
-                    <th>Nama Perusahaan (PT)</th>
-                    <th>Kontak & Email</th>
-                    <th>Alamat</th>
-                    <th class="text-center">Barang Dipasok</th>
-                    <th class="text-center pe-4" style="width: 160px;">Aksi</th>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-zinc-100">
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider w-12">No</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Kode</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Nama Perusahaan</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Kontak</th>
+                    <th class="text-left px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Alamat</th>
+                    <th class="text-center px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider">Barang</th>
+                    <th class="text-center px-6 py-3 text-xs font-medium text-zinc-400 uppercase tracking-wider w-36">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-zinc-50">
                 @forelse($suppliers as $index => $sup)
-                    <tr>
-                        <td class="ps-4 text-muted small">{{ $suppliers->firstItem() + $index }}</td>
-                        <td>
-                            <span class="badge bg-secondary font-monospace">{{ $sup->kode_supplier }}</span>
+                    <tr class="hover:bg-zinc-50/50 transition">
+                        <td class="px-6 py-3 text-zinc-400 text-xs">{{ $suppliers->firstItem() + $index }}</td>
+                        <td class="px-6 py-3"><span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-mono bg-zinc-100 text-zinc-600">{{ $sup->kode_supplier }}</span></td>
+                        <td class="px-6 py-3">
+                            <div class="font-medium text-zinc-900">{{ $sup->nama_pt }}</div>
+                            <div class="text-xs text-zinc-400 mt-0.5">Sejak {{ $sup->created_at->format('d M Y') }}</div>
                         </td>
-                        <td>
-                            <div class="fw-bold text-dark">{{ $sup->nama_pt }}</div>
-                            <span class="text-muted small">Terdaftar: {{ $sup->created_at->format('d M Y') }}</span>
+                        <td class="px-6 py-3">
+                            <div class="text-zinc-600">{{ $sup->email }}</div>
+                            <div class="text-xs text-zinc-400">{{ $sup->telepon }}</div>
                         </td>
-                        <td>
-                            <div><i class="bi bi-envelope text-muted me-1 small"></i>{{ $sup->email }}</div>
-                            <div class="small text-muted"><i class="bi bi-telephone text-muted me-1 small"></i>{{ $sup->telepon }}</div>
+                        <td class="px-6 py-3 text-zinc-500 max-w-[200px] truncate" title="{{ $sup->alamat }}">{{ $sup->alamat }}</td>
+                        <td class="px-6 py-3 text-center">
+                            <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-50 text-blue-600">{{ $sup->barang_count }} SKU</span>
                         </td>
-                        <td>
-                            <span class="text-truncate d-inline-block" style="max-width: 250px;" title="{{ $sup->alamat }}">
-                                {{ $sup->alamat }}
-                            </span>
-                        </td>
-                        <td class="text-center">
-                            <span class="badge bg-primary-subtle text-primary border px-2 py-1">
-                                {{ $sup->barang_count }} SKU
-                            </span>
-                        </td>
-                        <td class="text-center pe-4">
-                            <div class="btn-group btn-group-sm">
-                                <a href="{{ route('admin.suppliers.show', $sup) }}" class="btn btn-outline-secondary" title="Detail">
-                                    <i class="bi bi-eye"></i>
+                        <td class="px-6 py-3 text-center">
+                            <div class="inline-flex items-center gap-1">
+                                <a href="{{ route('admin.suppliers.show', $sup) }}" class="p-2 rounded-lg text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition" title="Detail">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                 </a>
-
                                 @if(Auth::user()?->role === 'manager')
-                                    <a href="{{ route('admin.suppliers.edit', $sup) }}" class="btn btn-outline-primary" title="Ubah">
-                                        <i class="bi bi-pencil"></i>
+                                    <a href="{{ route('admin.suppliers.edit', $sup) }}" class="p-2 rounded-lg text-zinc-400 hover:text-blue-600 hover:bg-blue-50 transition" title="Ubah">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                     </a>
-                                    <form action="{{ route('admin.suppliers.destroy', $sup) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus supplier {{ $sup->nama_pt }}?');">
+                                    <form action="{{ route('admin.suppliers.destroy', $sup) }}" method="POST" class="inline" onsubmit="return confirm('Hapus supplier {{ $sup->nama_pt }}?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger" title="Hapus (Soft Delete)">
-                                            <i class="bi bi-trash"></i>
+                                        <button type="submit" class="p-2 rounded-lg text-zinc-400 hover:text-red-600 hover:bg-red-50 transition" title="Hapus">
+                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                         </button>
                                     </form>
                                 @endif
@@ -108,21 +85,19 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center py-5 text-muted">
-                            <i class="bi bi-truck fs-1 d-block mb-2 text-secondary"></i>
-                            Tidak ada supplier yang ditemukan.
+                        <td colspan="7" class="px-6 py-16 text-center">
+                            <svg class="w-12 h-12 text-zinc-200 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <p class="text-zinc-400 text-sm">Tidak ada supplier ditemukan.</p>
                         </td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-
     @if($suppliers->hasPages())
-        <div class="card-footer bg-white py-3 border-top">
-            {{ $suppliers->links('pagination::bootstrap-5') }}
+        <div class="px-6 py-4 border-t border-zinc-100">
+            {{ $suppliers->links('pagination::tailwind') }}
         </div>
     @endif
 </div>
 @endsection
-
