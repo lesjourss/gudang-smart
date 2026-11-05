@@ -483,4 +483,3 @@ gudang-smart/
 ```
 
 ---
-*Dokumentasi ini disusun secara terstruktur untuk memenuhi seluruh capaian pembelajaran (CPL & CPMK) pada Ujian Tengah Semester (UTS) Praktik Pemrograman Web.*
