@@ -1,32 +1,32 @@
-# 📦 GudangSmart — Sistem Manufaktur & Inventory Gudang
+# GudangSmart — Sistem Manufaktur & Inventory Gudang
 > **Laporan & Dokumentasi Lengkap Ujian Tengah Semester (UTS) Praktik Pemrograman Web (PWTM)**  
 > **Studi Kasus:** Sistem Informasi Pergudangan & Manufaktur Berbasis Framework Laravel 12 (PHP 8.2 & MariaDB)
 
 ---
 
-## 📋 DAFTAR ISI
-1. [Deskripsi Skenario Utama](#-deskripsi-skenario-utama)
-2. [Kredensial Pengujian Akun (RBAC)](#-kredensial-pengujian-akun-rbac)
-3. [Panduan Instalasi & Menjalankan Aplikasi](#-panduan-instalasi--menjalankan-aplikasi)
-4. [Soal & Jawaban Lengkap UTS PWTM](#-soal--jawaban-lengkap-uts-pwtm)
-   - [Nomor 1: Fondasi, Arsitektur & Routing (Bobot 15%)](#-nomor-1-fondasi-arsitektur--routing-bobot-15)
-   - [Nomor 2: Blade Templating & Reusable Components (Bobot 20%)](#-nomor-2-blade-templating--reusable-components-bobot-20)
-   - [Nomor 3: Skema Basis Data, Model ORM & Seeder (Bobot 20%)](#-nomor-3-skema-basis-data-model-orm--seeder-bobot-20)
-   - [Nomor 4: Relasi, Form Request & Controller Kompleks (Bobot 25%)](#-nomor-4-relasi-form-request--controller-kompleks-bobot-25)
-   - [Nomor 5: Autentikasi & Role-Based Access Control (Bobot 20%)](#-nomor-5-autentikasi--role-based-access-control-bobot-20)
-5. [Hasil Uji Otomatis (Automated Testing)](#-hasil-uji-otomatis-automated-testing)
-6. [Struktur Direktori Proyek](#-struktur-direktori-proyek)
+## DAFTAR ISI
+1. [Deskripsi Skenario Utama](#deskripsi-skenario-utama)
+2. [Kredensial Pengujian Akun (RBAC)](#kredensial-pengujian-akun-rbac)
+3. [Panduan Instalasi & Menjalankan Aplikasi](#panduan-instalasi--menjalankan-aplikasi)
+4. [Soal & Jawaban Lengkap UTS PWTM](#soal--jawaban-lengkap-uts-pwtm)
+   - [Nomor 1: Fondasi, Arsitektur & Routing (Bobot 15%)](#nomor-1-fondasi-arsitektur--routing-bobot-15)
+   - [Nomor 2: Blade Templating & Reusable Components (Bobot 20%)](#nomor-2-blade-templating--reusable-components-bobot-20)
+   - [Nomor 3: Skema Basis Data, Model ORM & Seeder (Bobot 20%)](#nomor-3-skema-basis-data-model-orm--seeder-bobot-20)
+   - [Nomor 4: Relasi, Form Request & Controller Kompleks (Bobot 25%)](#nomor-4-relasi-form-request--controller-kompleks-bobot-25)
+   - [Nomor 5: Autentikasi & Role-Based Access Control (Bobot 20%)](#nomor-5-autentikasi--role-based-access-control-bobot-20)
+5. [Hasil Uji Otomatis (Automated Testing)](#hasil-uji-otomatis-automated-testing)
+6. [Struktur Direktori Proyek](#struktur-direktori-proyek)
 
 ---
 
-## 🏢 DESKRIPSI SKENARIO UTAMA
+## DESKRIPSI SKENARIO UTAMA
 Sebuah perusahaan manufaktur berskala menengah membutuhkan aplikasi **Sistem Manufaktur & Inventory Gudang ("GudangSmart")** untuk mencatat pergudangan, pemasok (*supplier*), katalog barang, serta mutasi penerimaan dan pengeluaran barang secara terstruktur, aman, dan efisien berbasis framework Laravel.
 
 Aplikasi ini dikembangkan dengan arsitektur **MVC murni**, antarmuka terinspirasi dari gaya **minimalis iOS & shadcn/ui** berbasis Tailwind CSS, dilengkapi pengamanan hak akses berjenjang (Role-Based Access Control), validasi form ketat, pencegahan *N+1 Query*, serta mekanisme *Soft Deletes*.
 
 ---
 
-## 🔑 KREDENSIAL PENGUJIAN AKUN (RBAC)
+## KREDENSIAL PENGUJIAN AKUN (RBAC)
 
 Basis data telah dilengkapi akun default hasil seeder untuk menguji kedua peran (*role*):
 
@@ -37,7 +37,7 @@ Basis data telah dilengkapi akun default hasil seeder untuk menguji kedua peran 
 
 ---
 
-## 🚀 PANDUAN INSTALASI & MENJALANKAN APLIKASI
+## PANDUAN INSTALASI & MENJALANKAN APLIKASI
 
 ### 1. Prasyarat Lingkungan
 - PHP $\ge$ 8.2
@@ -72,7 +72,7 @@ Basis data telah dilengkapi akun default hasil seeder untuk menguji kedua peran 
 
 ---
 
-## 📝 SOAL & JAWABAN LENGKAP UTS PWTM
+## SOAL & JAWABAN LENGKAP UTS PWTM
 
 ```
 ========================================================================================
@@ -80,7 +80,7 @@ Basis data telah dilengkapi akun default hasil seeder untuk menguji kedua peran 
 ========================================================================================
 ```
 
-### 📌 NOMOR 1: FONDASI, ARSITEKTUR & ROUTING (BOBOT 15%)
+### NOMOR 1: FONDASI, ARSITEKTUR & ROUTING (BOBOT 15%)
 > **CPL01**: Memiliki kompetensi yang baik dalam bidang komputasi dan mampu mengaplikasikan berbagai algoritma untuk menyelesaikan permasalahan organisasi.  
 > **CPMK01B**: Memahami konsep dasar algoritma dan arsitektur aplikasi web modern sebagai langkah-langkah terstruktur untuk menyelesaikan suatu masalah secara sistematis, serta memahami pentingnya arsitektur dalam pengembangan perangkat lunak.
 
@@ -155,7 +155,7 @@ Alur kerja komputasi saat pengguna meminta halaman `http://localhost:8000/admin/
 ========================================================================================
 ```
 
-### 🎨 NOMOR 2: BLADE TEMPLATING & REUSABLE COMPONENTS (BOBOT 20%)
+### NOMOR 2: BLADE TEMPLATING & REUSABLE COMPONENTS (BOBOT 20%)
 > **CPL04**: Memiliki kemampuan untuk menganalisis, merancang, mengembangkan, dan mengevaluasi antarmuka pengguna serta aplikasi interaktif dengan mempertimbangkan kebutuhan pengguna dan tren teknologi terkini.  
 > **CPMK04A**: Mampu menganalisis dan merancang antarmuka pengguna serta aplikasi interaktif menggunakan modul template engine yang reusable dan konsisten.
 
@@ -197,7 +197,7 @@ Dilengkapi area pintasan aksi cepat (*Quick Actions*), status otorisasi role pen
 ========================================================================================
 ```
 
-### 🗄️ NOMOR 3: SKEMA BASIS DATA, MODEL ORM & SEEDER (BOBOT 20%)
+### NOMOR 3: SKEMA BASIS DATA, MODEL ORM & SEEDER (BOBOT 20%)
 > **CPL03**: Menguasai pengetahuan teoritis di bidang ilmu komputer dan mampu menerapkannya dalam perancangan dan pengembangan aplikasi multi-platform untuk memenuhi kebutuhan industri.  
 > **CPMK03B**: Mampu menerapkan pengetahuan teoritis di bidang ilmu komputer dalam perancangan basis data relasional berbasis ORM (Object-Relational Mapping).
 
@@ -264,7 +264,7 @@ Berkas migrasi dibuat terstruktur dengan foreign key cascades dan soft deletes:
 ========================================================================================
 ```
 
-### ⚡ NOMOR 4: RELASI, FORM REQUEST & CONTROLLER KOMPLEKS (BOBOT 25%)
+### NOMOR 4: RELASI, FORM REQUEST & CONTROLLER KOMPLEKS (BOBOT 25%)
 > **CPL02**: Menguasai keahlian dalam menganalisis masalah kompleks di bidang informatika dan mampu mengelola proyek teknologi dengan mempertimbangkan perkembangan ilmu lintas disiplin.  
 > **CPMK02B**: Mampu mengelola proyek teknologi dan mengembangkan fitur pemrosesan data kompleks (Advanced CRUD, relasi multi-tabel, pencarian, dan validasi).
 
@@ -354,7 +354,7 @@ Berkas migrasi dibuat terstruktur dengan foreign key cascades dan soft deletes:
 ========================================================================================
 ```
 
-### 🛡️ NOMOR 5: AUTENTIKASI & ROLE-BASED ACCESS CONTROL (BOBOT 20%)
+### NOMOR 5: AUTENTIKASI & ROLE-BASED ACCESS CONTROL (BOBOT 20%)
 > **CPL02**: Menguasai keahlian dalam menganalisis masalah kompleks di bidang informatika dan mampu mengelola proyek teknologi dengan mempertimbangkan perkembangan ilmu lintas disiplin.  
 > **CPMK02C**: Mampu menerapkan pengamanan hak akses (Authentication & Authorization) dan proteksi rute berbasis peran pengguna (Role-based Middleware).
 
@@ -397,7 +397,7 @@ Seluruh rute sistem diproteksi di `routes/web.php` dengan kombinasi middleware:
 
 ---
 
-## 🧪 HASIL UJI OTOMATIS (AUTOMATED TESTING)
+## HASIL UJI OTOMATIS (AUTOMATED TESTING)
 
 Pengujian end-to-end dan unit fungsional dibuat pada `tests/Feature/GudangSmartSystemTest.php`. Semua skenario lulus dengan status **100% PASS**:
 
@@ -425,7 +425,7 @@ $ php artisan test
 
 ---
 
-## 📁 STRUKTUR DIREKTORI PROYEK
+## STRUKTUR DIREKTORI PROYEK
 
 ```
 gudang-smart/
