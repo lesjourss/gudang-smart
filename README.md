@@ -1,5 +1,5 @@
 # GudangSmart — Sistem Manufaktur & Inventory Gudang
-2411501865 Zahfandhika Fauzan Maldini
+**2411501865 Zahfandhika Fauzan Maldini**
 > **Laporan & Dokumentasi Lengkap Ujian Tengah Semester (UTS) Praktik Pemrograman Web (PWTM)**  
 > **Studi Kasus:** Sistem Informasi Pergudangan & Manufaktur Berbasis Framework Laravel 12 (PHP 8.2 & MariaDB)
 
