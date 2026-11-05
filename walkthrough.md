@@ -67,24 +67,25 @@ Saat pengguna mengakses URL `http://localhost:8000/admin/dashboard`:
 ## 🎨 JAWABAN SOAL 2: BLADE TEMPLATING & REUSABLE COMPONENTS (BOBOT 20%)
 
 ### 2.1 Master Layout Inheritance (`resources/views/layouts/app.blade.php`)
-Menggunakan tata letak baku yang terstruktur rapi:
-- **Header**: Terhubung ke navigasi utama sistem.
-- **Sidebar Navigation**: Menu di sisi samping kiri.
+Menggunakan tata letak baku yang dirancang dengan **Desain Minimalis Modern ala iOS & shadcn/ui berbasis Tailwind CSS**:
+- **Desain & Tipografi**: Menggunakan font Inter, palet warna netral *zinc*, kartu dengan radius melengkung halus (`rounded-2xl`), border tipis (`border-zinc-200/60`), dan efek *backdrop blur* navigasi atas (`bg-white/80 backdrop-blur-xl`).
+- **Header**: Terhubung ke navigasi utama sistem dengan logo modern dan indikator koneksi online.
+- **Sidebar Navigation**: Menu di sisi samping kiri dengan highlight aktif yang jelas.
 - **Content Area**: Memanfaatkan directive Blade `@yield('content')` serta `@stack('styles')` dan `@stack('scripts')`.
 - **Footer**: Hak cipta sistem GudangSmart di bagian bawah.
 
 ### 2.2 Tiga Reusable Blade Components
 1. **`<x-navbar>` (`resources/views/components/navbar.blade.php`)**:
-   - Menampilkan logo/identitas brand GudangSmart.
-   - Indikator koneksi sistem: `Online (MariaDB Terhubung)`.
-   - Menampilkan nama pengguna yang sedang login beserta badge peran (`manager` / `staff`) dan tombol logout.
+   - Menampilkan logo/identitas brand GudangSmart berdesain minimalis.
+   - Indikator koneksi sistem: `Online` dengan animasi pulsing ring hijau.
+   - Menampilkan profil pengguna yang sedang login, avatar inisial, badge peran (`manager` / `staff`), dropdown info akun, dan tombol logout.
 2. **`<x-sidebar>` (`resources/views/components/sidebar.blade.php`)**:
-   - Menu terintegrasi: *Dashboard*, *Supplier*, *Kategori Barang*, *Katalog Barang*, dan *Mutasi Stok*.
+   - Menu navigasi bersih: *Dashboard*, *Supplier*, *Katalog Barang*, *Kategori Barang*, dan *Mutasi Stok*.
    - Menampilkan item menu khusus peran Manager (*Data Sampah / Trash*).
    - Menandai menu aktif secara dinamis (`request()->routeIs()`).
 3. **`<x-alert>` (`resources/views/components/alert.blade.php`)**:
    - Komponen notifikasi serbaguna berbasis prop: `type="success"`, `type="danger"`, `type="warning"`, `type="info"`.
-   - Dilengkapi tombol penutup (dismissible) dan ikon Bootstrap yang sesuai.
+   - Dilengkapi tombol penutup (dismissible) dan ikon SVG Lucide-style yang elegan.
 
 ### 2.3 Implementasi Halaman Dashboard (`resources/views/dashboard.blade.php`)
 Menampilkan **3 Buah Card Ringkasan**:
