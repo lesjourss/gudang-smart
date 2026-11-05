@@ -27,57 +27,62 @@
         [x-cloak] { display: none !important; }
         body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
         /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 9px; }
         ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
     </style>
     @stack('styles')
 </head>
-<body class="bg-zinc-50/80 text-zinc-700 min-h-screen flex flex-col antialiased">
+<body class="bg-zinc-50 text-zinc-700 antialiased">
 
-    <!-- 1. Header & Top Navigation Bar (Reusable Component) -->
-    <header class="sticky top-0 z-50">
-        <x-navbar />
-    </header>
+    <!-- Full-height wrapper -->
+    <div class="min-h-screen flex flex-col">
 
-    <!-- 2. Main Wrapper: Sidebar Navigation & Content Area -->
-    <div class="flex flex-1 overflow-hidden">
-        <!-- Sidebar Navigation (Reusable Component) -->
-        <aside class="hidden lg:block flex-shrink-0">
-            <x-sidebar />
-        </aside>
+        <!-- 1. Top Navigation Bar -->
+        <header class="sticky top-0 z-50">
+            <x-navbar />
+        </header>
 
-        <!-- 3. Content Area (Directives: @yield('content')) -->
-        <main class="flex-1 overflow-y-auto p-6 lg:p-8">
-            <div class="max-w-7xl mx-auto">
-                <!-- Flash Message Alerts -->
-                @if(session('success'))
-                    <x-alert type="success" :message="session('success')" />
-                @endif
+        <!-- 2. Sidebar + Content -->
+        <div class="flex flex-1">
+            <!-- Sidebar -->
+            <aside class="hidden lg:flex flex-shrink-0">
+                <x-sidebar />
+            </aside>
 
-                @if(session('error'))
-                    <x-alert type="danger" :message="session('error')" />
-                @endif
+            <!-- 3. Main Content -->
+            <main class="flex-1 min-w-0 overflow-y-auto">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+                    <!-- Flash Message Alerts -->
+                    @if(session('success'))
+                        <x-alert type="success" :message="session('success')" />
+                    @endif
 
-                @if(session('warning'))
-                    <x-alert type="warning" :message="session('warning')" />
-                @endif
+                    @if(session('error'))
+                        <x-alert type="danger" :message="session('error')" />
+                    @endif
 
-                @if(session('info'))
-                    <x-alert type="info" :message="session('info')" />
-                @endif
+                    @if(session('warning'))
+                        <x-alert type="warning" :message="session('warning')" />
+                    @endif
 
-                <!-- Dynamic Content Injected Here -->
-                @yield('content')
-            </div>
-        </main>
+                    @if(session('info'))
+                        <x-alert type="info" :message="session('info')" />
+                    @endif
+
+                    <!-- Dynamic Content -->
+                    @yield('content')
+                </div>
+
+                <!-- Footer inside scrollable area -->
+                <footer class="border-t border-zinc-200/60 bg-white/60 backdrop-blur-sm mt-auto py-4 px-6 text-center text-zinc-400 text-xs">
+                    <span>&copy; {{ date('Y') }} <strong class="text-zinc-500">GudangSmart</strong> &mdash; Sistem Manufaktur & Inventory Berbasis Laravel. UTS Praktik PWTM.</span>
+                </footer>
+            </main>
+        </div>
+
     </div>
-
-    <!-- 4. Footer Area -->
-    <footer class="border-t border-zinc-200/60 bg-white py-4 text-center text-zinc-400 text-xs">
-        <span>&copy; {{ date('Y') }} <strong class="text-zinc-600">GudangSmart</strong> &mdash; Sistem Manufaktur & Inventory Berbasis Laravel Framework. Dibuat untuk Evaluasi Praktik PWTM.</span>
-    </footer>
 
     @stack('scripts')
 </body>
